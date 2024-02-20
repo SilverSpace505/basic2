@@ -2,6 +2,7 @@
 class UI {
     elements = []
     eid = 0
+    autoOutline = 1
     getElement(id=this.eid) {
         if (id >= this.elements.length) {
             let element = document.createElement("div")
@@ -41,6 +42,34 @@ class UI {
         if (outlineSize > 0) {
             element.style.border = `${outlineSize}px solid rgba(${outlineColour[0]}, ${outlineColour[1]}, ${outlineColour[2]}, ${outlineColour[3]})`
         }
+    }
+    text(x, y, size, text, options={}) {
+        let element = this.getElement()
+        if (element.nodeName != "P") {
+            let nElement = document.createElement("p")
+            document.body.replaceChild(nElement, element)
+            element = nElement
+            this.elements[this.eid-1] = element
+        }
+
+        var {colour=[255, 255, 255, 1], outlineColour=[0, 0, 0, 1], outlineSize="auto"} = options
+
+        if (outlineSize == "auto") {
+            outlineSize = size/this.autoOutline
+        }
+
+        element.style = ""
+        element.style.position = "absolute"
+        element.style.margin = 0
+        
+        element.style.left = x+"px"
+        element.style.top = y+"px"
+        element.style.color = "blue"
+        element.style.font = `bold ${size}px sans-serif,serif`
+        element.style.webkitTextStroke = `${outlineSize}px black`
+        element.style.webkitTextFillColor = "blue"
+
+        element.innerHTML = text
     }
 }
 

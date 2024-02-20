@@ -10,7 +10,11 @@ function update(timestamp) {
     lastTime = timestamp
     time += delta
 
-    ui.rect(200+Math.sin(time)*50, 200, 100, 100, [0, 255, 0, 1])
+    // for (let i = 0; i < 200; i++) {
+    //     ui.rect(200+i*2+Math.sin(time)*50, 200, 100, 100, [0, 255, 0, 1])
+    // }
+
+    ui.text(500, 500, 30, "This, is a very cool peice of text lol")
 
     ui.endFrame()
 }
