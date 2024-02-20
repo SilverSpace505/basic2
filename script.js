@@ -3,6 +3,8 @@ var time = 0
 var lastTime = 0
 var delta = 0
 
+// testing 123 49fsnieufnesifniusndfew
+
 ui.setFont("custom", "font.ttf")
 
 function update(timestamp) {
