@@ -2,7 +2,27 @@
 class UI {
     elements = []
     eid = 0
-    autoOutline = 1
+    autoOutline = 7
+    textOutlines = {}
+    getTextOutline(size, colour) {
+        // https://stackoverflow.com/questions/4919076/outline-effect-to-text
+        let id = [size, ...colour].join(",")
+        if (id in this.textOutlines) {
+            return this.textOutlines[id]
+        } else {
+            let textShadow = ""
+            let outlineSize2 = Math.floor(size)
+            let dif = size-outlineSize2
+            for (let angle = 0; angle < Math.PI*2; angle += Math.PI*2/8) {
+                for (let  i = 0; i < outlineSize2; i++) {
+                    textShadow += `${Math.sin(angle)*(i+1+dif)}px ${Math.cos(angle)*(i+1+dif)}px 0 black,`
+                }
+            }
+            textShadow = textShadow.substring(0, textShadow.length-1)
+            this.textOutlines[id] = textShadow
+            return textShadow
+        }
+    }
     getElement(id=this.eid) {
         if (id >= this.elements.length) {
             let element = document.createElement("div")
@@ -44,6 +64,32 @@ class UI {
         }
     }
     text(x, y, size, text, options={}) {
+        var {colour=[255, 255, 255, 1], outlineColour=[0, 0, 0, 1], outlineSize="auto"} = options
+        if (outlineSize == "auto") {
+            outlineSize = size/this.autoOutline
+        }
+
+        // if (outlineSize > 0) {
+        //     let oElement = this.getElement()
+        //     if (oElement.nodeName != "P") {
+        //         let nElement = document.createElement("p")
+        //         document.body.replaceChild(nElement, oElement)
+        //         oElement = nElement
+        //         this.elements[this.eid-1] = oElement
+        //     }
+
+        //     oElement.style = ""
+        //     oElement.style.position = "absolute"
+        //     oElement.style.margin = 0
+        //     oElement.style.left = x+"px"
+        //     oElement.style.top = y+"px"
+        //     oElement.style.color = "black"
+        //     oElement.style.font = `bold ${size}px sans-serif,serif`
+        //     oElement.style.webkitTextStroke = `${outlineSize}px black`
+        //     oElement.innerHTML = text
+        // }
+
+
         let element = this.getElement()
         if (element.nodeName != "P") {
             let nElement = document.createElement("p")
@@ -52,22 +98,15 @@ class UI {
             this.elements[this.eid-1] = element
         }
 
-        var {colour=[255, 255, 255, 1], outlineColour=[0, 0, 0, 1], outlineSize="auto"} = options
-
-        if (outlineSize == "auto") {
-            outlineSize = size/this.autoOutline
-        }
-
         element.style = ""
         element.style.position = "absolute"
         element.style.margin = 0
         
         element.style.left = x+"px"
         element.style.top = y+"px"
-        element.style.color = "blue"
+        element.style.color = "white"
         element.style.font = `bold ${size}px sans-serif,serif`
-        element.style.webkitTextStroke = `${outlineSize}px black`
-        element.style.webkitTextFillColor = "blue"
+        element.style.textShadow = this.getTextOutline(outlineSize, [255, 0, 0, 1])
 
         element.innerHTML = text
     }
