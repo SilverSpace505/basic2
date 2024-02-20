@@ -2,22 +2,44 @@
 class UI {
     elements = []
     eid = 0
-    autoOutline = 7
+    autoOutline = 4.5
     textOutlines = {}
+    font = "sans-serif,serif"
+    styleE
+    setFont(font, path) {
+        this.font = font
+        if (font.includes("custom")) {
+            if (this.styleE) document.head.removeChild(this.styleE)
+            this.styleE = document.createElement("style")
+            this.styleE.appendChild(document.createTextNode(""))
+            this.styleE.innerHTML = `
+                @font-face {
+                    font-family: custom;
+                    src: url("${path}");
+                }
+            `
+            document.head.appendChild(this.styleE)
+        }
+    }
     getTextOutline(size, colour) {
+        size = Math.round(size*100)/100
         // https://stackoverflow.com/questions/4919076/outline-effect-to-text
         let id = [size, ...colour].join(",")
         if (id in this.textOutlines) {
             return this.textOutlines[id]
         } else {
             let textShadow = ""
-            let outlineSize2 = Math.floor(size)
-            let dif = size-outlineSize2
-            for (let angle = 0; angle < Math.PI*2; angle += Math.PI*2/8) {
-                for (let  i = 0; i < outlineSize2; i++) {
-                    textShadow += `${Math.sin(angle)*(i+1+dif)}px ${Math.cos(angle)*(i+1+dif)}px 0 black,`
-                }
+            for (let i = 0; i < 10; i++) {
+                textShadow += `0 0 ${size}px black,`
             }
+            // let outlineSize2 = Math.floor(size)
+            // let dif = size-outlineSize2
+            // for (let angle = 0; angle < Math.PI*2; angle += Math.PI*2/8) {
+            //     textShadow += `${Math.sin(angle)*(size)}px ${Math.cos(angle)*(size)}px ${size/2}px black,`
+            //     for (let  i = 0; i < outlineSize2; i++) {
+                    
+            //     }
+            // }
             textShadow = textShadow.substring(0, textShadow.length-1)
             this.textOutlines[id] = textShadow
             return textShadow
@@ -69,25 +91,25 @@ class UI {
             outlineSize = size/this.autoOutline
         }
 
-        // if (outlineSize > 0) {
-        //     let oElement = this.getElement()
-        //     if (oElement.nodeName != "P") {
-        //         let nElement = document.createElement("p")
-        //         document.body.replaceChild(nElement, oElement)
-        //         oElement = nElement
-        //         this.elements[this.eid-1] = oElement
-        //     }
+        if (outlineSize > 0) {
+            let oElement = this.getElement()
+            if (oElement.nodeName != "P") {
+                let nElement = document.createElement("p")
+                document.body.replaceChild(nElement, oElement)
+                oElement = nElement
+                this.elements[this.eid-1] = oElement
+            }
 
-        //     oElement.style = ""
-        //     oElement.style.position = "absolute"
-        //     oElement.style.margin = 0
-        //     oElement.style.left = x+"px"
-        //     oElement.style.top = y+"px"
-        //     oElement.style.color = "black"
-        //     oElement.style.font = `bold ${size}px sans-serif,serif`
-        //     oElement.style.webkitTextStroke = `${outlineSize}px black`
-        //     oElement.innerHTML = text
-        // }
+            oElement.style = ""
+            oElement.style.position = "absolute"
+            oElement.style.margin = 0
+            oElement.style.left = x+"px"
+            oElement.style.top = y+"px"
+            oElement.style.color = "black"
+            oElement.style.font = `${size}px ${this.font}`
+            oElement.style.webkitTextStroke = `${outlineSize}px black`
+            oElement.innerHTML = text
+        }
 
 
         let element = this.getElement()
@@ -105,9 +127,11 @@ class UI {
         element.style.left = x+"px"
         element.style.top = y+"px"
         element.style.color = "white"
-        element.style.font = `bold ${size}px sans-serif,serif`
-        element.style.textShadow = this.getTextOutline(outlineSize, [255, 0, 0, 1])
-
+        element.style.font = `${size}px ${this.font}`
+        element.style.webkitFontSmoothing = "antialiased"
+        element.style.textShadow = "0 5px 0 grey"
+        // element.style.webkitTextStroke = `${outlineSize}px black`
+        // element.style.webkitTextFillColor = "transparent"
         element.innerHTML = text
     }
 }
