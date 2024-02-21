@@ -61,7 +61,7 @@ class UI {
     }
     getOrder() {
         this.eorder++
-        return (this.eorder - 1).toString()
+        return (this.eorder - 1)
     }
     endFrame() {
         this.eorder = 0
@@ -78,11 +78,15 @@ class UI {
                 this.stableElements[id].hide()
             }
         }
-        let list = [...this.page.children]
-        list = list.sort((a, b) => a.order - b.order)
-        for (let i = 0; i < list.length; i++) {
-            this.page.appendChild(list[i])
-        }
+        // let list = Array.from(this.page.children)
+        // let orders = []
+        // for (let node of list) {
+        //     orders.push(node.order)
+        // }
+        // list = list.sort((a, b) => a.order.toString() - b.order.toString())
+        // for (let i = 0; i < list.length; i++) {
+        //     this.page.appendChild(list[i])
+        // }
     }
     rect(x, y, width, height, colour, outlineSize=0, outlineColour=[0,0,0,0]) {
         let element = this.getElement()
@@ -94,7 +98,7 @@ class UI {
         }
 
         element.style = ""
-        element.order = this.getOrder()
+        element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
         element.style.margin = 0
         element.style.left = x+"px"
@@ -122,7 +126,7 @@ class UI {
             }
 
             oElement.style = ""
-            oElement.order = this.getOrder()
+            oElement.style.zIndex = this.getOrder()
             oElement.style.position = "absolute"
             oElement.style.margin = 0
             oElement.style.left = x+"px"
@@ -172,7 +176,7 @@ class UI {
         }
 
         element.style = ""
-        element.order = this.getOrder()
+        element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
         element.style.margin = 0
         if (!selectable) {
@@ -213,7 +217,7 @@ class UI {
         }
 
         element.style = ""
-        element.order = this.getOrder()
+        element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
         element.style.margin = 0
         element.style.left = x-width/2+"px"
@@ -277,6 +281,7 @@ class UI {
             textOutlineColour = [0, 0, 0, 1]
             textOutlineSize = "auto"
             outlineSize = 0
+            lastPos = [1, 0]
             constructor(placeholder="", colour=[150, 150, 150, 1]) {
                 super()
                 this.placeholder = placeholder
@@ -294,8 +299,9 @@ class UI {
                     element = nElement
                     ui.elements[ui.eid-1] = element
                 }
+                element.spellcheck = false
                 element.style = ""
-                element.order = ui.getOrder()
+                element.style.zIndex = ui.getOrder()
                 element.style.position = "absolute"
                 element.style.margin = 0
                 element.style.left = this.x+"px"
@@ -303,39 +309,45 @@ class UI {
                 element.style.width = this.width+"px"
                 element.style.height = this.height+"px"
                 element.style.pointerEvents = "none"
-                element.style.backgroundColor = "rgba(0, 0, 0, 0)"
+                element.style.backgroundColor = `rgba(${this.colour[0]}, ${this.colour[1]}, ${this.colour[2]}, ${this.colour[3]})`
                 element.style.boxSizing = "border-box"
+                
                 element.value = this.element.value
-                element.style.border = `${this.outlineSize}px solid black`
-                // element.selectionStart = this.element.selectionStart
                 element.style.font = `${this.height*0.6}px ${ui.font}`
+                element.style.lineHeight = 2             
+                element.style.border = `${this.outlineSize}px solid black`
+                
                 element.style.color = `rgba(${this.textOutlineColour[0]}, ${this.textOutlineColour[1]}, ${this.textOutlineColour[2]}, ${this.textOutlineColour[3]})`
                 let outlineSize = this.textOutlineSize
                 if (this.textOutlineSize == "auto") {
                     outlineSize = this.height*0.6/ui.autoOutline
                 }
+                // element.style.paddingLeft = this.height*0.6/5+"px"
+                element.scrollLeft = this.element.scrollLeft
                 element.style.webkitTextStroke = `${outlineSize}px rgba(${this.textOutlineColour[0]}, ${this.textOutlineColour[1]}, ${this.textOutlineColour[2]}, ${this.textOutlineColour[3]})`
 
                 this.visible = true
                 this.element.spellcheck = false
                 this.element.style = ""
-                this.element.order = ui.getOrder()
+                this.element.style.zIndex = ui.getOrder()
                 this.element.style.display = ""
                 this.element.style.left = this.x+"px"
                 this.element.style.top = this.y+"px"
                 this.element.style.width = this.width+"px"
                 this.element.style.height = this.height+"px"
+                this.element.width = this.width
+                this.element.height = this.height
                 this.element.style.position = "absolute"
                 this.element.style.margin = 0
-                this.element.style.outline = "none"
-                this.element.placeholder = this.placeholder
+                // this.element.style.paddingLeft = this.height*0.6/5+"px"
+                this.element.style.font = `${this.height*0.6}px ${ui.font}`
+                // this.element.style.outline = "none"
+                
                 this.element.style.boxSizing = "border-box"
                 this.element.style.border = `${this.outlineSize}px solid black`
-                this.element.style.backgroundColor = `rgba(${this.colour[0]}, ${this.colour[1]}, ${this.colour[2]}, ${this.colour[3]})`
-                this.element.style.font = `${this.height*0.6}px ${ui.font}`
-                this.element.style.color = `rgba(${this.textColour[0]}, ${this.textColour[1]}, ${this.textColour[2]}, ${this.textColour[3]})`
+                this.element.style.backgroundColor = "rgba(0, 0, 0, 0)"
                 
-               
+                this.element.style.color = `rgba(${this.textColour[0]}, ${this.textColour[1]}, ${this.textColour[2]}, ${this.textColour[3]})`               
                 
             }
         }
