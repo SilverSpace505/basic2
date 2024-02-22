@@ -7,7 +7,7 @@ ui.setup()
 ui.setFont("custom", "font.ttf")
 ui.textShadow.bottom = "auto"
 
-var testing = new ui.TextBox("type here")
+var testing = new ui.TextBox("type here...")
 
 function update(timestamp) {
     requestAnimationFrame(update)
@@ -24,9 +24,13 @@ function update(timestamp) {
 
     ui.img(600, 200, 200+Math.sin(time+2)*50, 200+Math.sin(time+2)*50, "tileset.png", [0, 0, 64, 64])
 
+    ui.rect(800, 400, 100, 100, [255, 0, 0, 1])
+
     testing.set(400, 400, 400, 50)
     testing.outlineSize = 5
     testing.draw()
+
+    
 
     ui.endFrame()
 }
