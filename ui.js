@@ -16,6 +16,11 @@ class UI {
         document.body.style.overflow = "hidden"
         this.page = document.getElementById("page")
         this.parent = this.page
+        this.addStyle(`
+            input::selection {
+                background-color: transparent;
+            }
+        `)
     }
     getImg(src) {
         if (src in this.images) {
@@ -26,6 +31,11 @@ class UI {
             this.images[src] = img
             return this.images[src]
         }
+    }
+    addStyle(style) {
+        var element = document.createElement("style")
+        element.appendChild(document.createTextNode(style))
+        document.head.appendChild(element)
     }
     setFont(font, path) {
         this.font = font
@@ -299,7 +309,10 @@ class UI {
             outlineSize = 0
             lastPos = [1, 0]
             focused = false
-            pos = {x: 0, y: 0}
+            spos = {x: 0, y: 0}
+            epos = {x: 0, y: 0}
+            flashTime = 0
+            lastPos = ""
             constructor(placeholder="", colour=[150, 150, 150, 1]) {
                 super()
                 this.placeholder = placeholder
@@ -376,6 +389,15 @@ class UI {
                 }
                 let tElement = this.drawText(1, [0, 0], this.textColour)
                 
+                this.flashTime += delta
+                if (this.flashTime > 1) {
+                    this.flashTime = 0
+                }
+
+                if (this.element.selectionStart+","+this.element.selectionEnd != this.lastText) {
+                    this.flashTime = -0.5
+                }
+                this.lastText = this.element.selectionStart+","+this.element.selectionEnd
                 
                 this.visible = true
                 this.element.spellcheck = false
@@ -391,14 +413,15 @@ class UI {
                 this.element.height = this.height
                 this.element.style.position = "absolute"
                 this.element.style.margin = 0
+                this.element.style.caretColor = "transparent"
                 this.element.style.font = `${this.height*0.6}px ${ui.font}`
                 this.element.style.boxSizing = "border-box"
                 this.element.style.border = `${this.outlineSize}px solid rgba(${this.outlineColour[0]}, ${this.outlineColour[1]}, ${this.outlineColour[2]}, ${this.outlineColour[3]})`
                 this.element.style.borderRadius = this.outlineSize*2+"px"
-                this.element.style.backgroundColor = "rgba(0, 0, 0, 0)"
+                this.element.style.backgroundColor = "transparent"
                 this.element.style.color = `rgba(0, 0, 0, 0)`  
 
-                let focused = document.activeElement == this.element && this.element.selectionStart == this.element.selectionEnd
+                let focused = document.activeElement == this.element
                 if (focused) {
                     function getCaretCoordinates(element, position) {
                         var rect = element.getBoundingClientRect();
@@ -415,14 +438,23 @@ class UI {
                         }
                     }
                     
-                    let pos = getCaretCoordinates(this.element, this.element.selectionEnd)
+                    let spos = getCaretCoordinates(this.element, this.element.selectionStart)
+                    let epos = getCaretCoordinates(this.element, this.element.selectionEnd)
                     if (focused && !this.focused) {
-                        this.pos = {...pos}
+                        this.flashTime = 0
+                        this.spos = {...spos}
+                        this.epos = {...epos}
                     } else {
-                        this.pos.x += (pos.x-this.pos.x) * Math.min(Math.max(delta*20, 0), 1)
+                        this.spos.x += (spos.x-this.spos.x) * Math.min(Math.max(delta*20, 0), 1)
+                        this.epos.x += (epos.x-this.epos.x) * Math.min(Math.max(delta*20, 0), 1)
                     }
+                    
                     ui.parent = tElement
-                    let e2 = ui.rect(this.pos.x+2.5, this.height/2-(this.height/2-this.height*0.6/1.5), 3, this.height*0.75, [255, 255, 255, 1])
+                    if (this.element.selectionStart == this.element.selectionEnd) {
+                        ui.rect(this.epos.x+2.5, this.height/2-(this.height/2-this.height*0.6/1.5), 4, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3])
+                    } else {
+                        ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.5])
+                    }
                     ui.parent = ui.page
                 } 
                 this.focused = focused
