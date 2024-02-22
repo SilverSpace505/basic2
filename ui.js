@@ -18,7 +18,16 @@ class UI {
         this.parent = this.page
         this.addStyle(`
             input::selection {
-                background-color: transparent;
+                background-color: rgba(0,0,0,0);
+            }
+            input::-moz-selection {
+                background-color: rgba(0,0,0,0);
+            }
+            input::-ms-selection {
+                background-color: rgba(0,0,0,0);
+            }
+            input::-webkit-selection {
+                background-color: rgba(0,0,0,0);
             }
         `)
     }
