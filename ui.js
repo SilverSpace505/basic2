@@ -98,6 +98,9 @@ class UI {
     startFrame() {
         document.body.style.zoom = "100%"
         window.scrollTo(0, 0)
+        this.page.style.margin = 0
+        this.page.style.width = window.innerWidth
+        this.page.style.height = window.innerHeight
     }
     endFrame() {
         this.eorder = 0
@@ -343,7 +346,7 @@ class UI {
                 this.element.style.display = "none"
                 ui.parent.appendChild(this.element)
             }
-            drawText(i, off, colour) {
+            drawText(i, off, colour, bg=false) {
                 let element = ui.getElement2("DIV")
                 element.style = ""
                 element.style.zIndex = ui.getOrder()
@@ -354,7 +357,7 @@ class UI {
                 element.style.width = this.width+"px"
                 element.style.height = this.height+"px"
                 element.style.pointerEvents = "none"
-                if (i == 0) element.style.backgroundColor = `rgba(${this.colour[0]}, ${this.colour[1]}, ${this.colour[2]}, ${this.colour[3]})`
+                if (i == 0 && bg) element.style.backgroundColor = `rgba(${this.colour[0]}, ${this.colour[1]}, ${this.colour[2]}, ${this.colour[3]})`
                 element.style.boxSizing = "border-box"
                 element.style.display = "flex"
                 element.style.alignItems = "center"
@@ -411,7 +414,7 @@ class UI {
                     this.flashTime = 0
                 }
 
-                this.drawText(0, [0, 0], this.textColour)
+                this.drawText(0, [0, 0], this.textColour, true)
                 let dirs = ["top", "bottom", "left", "right"]
                 let colour2 = ui.textShadow.colour
                 if (colour2 == "auto") colour2 = this.textColour
