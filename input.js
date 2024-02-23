@@ -134,7 +134,7 @@ class Input {
 		this.downTime = 0
 		this.mouse.x = event.touches[0].clientX
 		this.mouse.y = event.touches[0].clientY
-		event.preventDefault()
+		if (document.activeElement == document.body && !window.getSelection().toString()) event.preventDefault()
 
 		this.touches = {}
 		for (let touch of event.touches) {
