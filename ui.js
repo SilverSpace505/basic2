@@ -159,7 +159,6 @@ class UI {
             oElement.style.left = x+"px"
             oElement.style.top = y-size/2+"px"
             oElement.style.userSelect = "none"
-            oElement.style.webkitUserSelect = "none"
             oElement.style.mozUserSelect = "none"
             oElement.style.msUserSelect = "none"
             oElement.style.pointerEvents = "none"
@@ -202,7 +201,6 @@ class UI {
         element.style.margin = 0
         if (!selectable) {
             element.style.userSelect = "none"
-            element.style.webkitUserSelect = "none"
             element.style.mozUserSelect = "none"
             element.style.msUserSelect = "none"
             element.style.pointerEvents = "none"
@@ -356,6 +354,9 @@ class UI {
                 element.style.boxSizing = "border-box"
                 element.style.display = "flex"
                 element.style.alignItems = "center"
+                element.style.userSelect = "none"
+                element.style.mozUserSelect = "none"
+                element.style.msUserSelect = "none"
                 
                 element.textContent = this.element.value
                 if (this.element.value == "") {
@@ -420,6 +421,9 @@ class UI {
                 this.element.height = this.height
                 this.element.style.position = "absolute"
                 this.element.style.margin = 0
+                this.element.style.userSelect = "none"
+                this.element.style.mozUserSelect = "none"
+                this.element.style.msUserSelect = "none"
                 this.element.style.caretColor = "transparent"
                 this.element.style.font = `${this.height*0.6}px ${ui.font}`
                 this.element.style.boxSizing = "border-box"
