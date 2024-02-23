@@ -4,7 +4,7 @@ var lastTime = 0
 var delta = 0
 
 ui.setup()
-ui.setFont("custom", "cool3.ttf")
+ui.setFont("custom", "font.ttf")
 ui.textShadow.bottom = "auto"
 
 var testing = new ui.TextBox("type here...")

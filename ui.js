@@ -125,18 +125,19 @@ class UI {
         //     this.page.appendChild(list[i])
         // }
     }
-    rect(x, y, width, height, colour, outlineSize=0, outlineColour=[0,0,0,0]) {
+    rect(x, y, width, height, colour, outlineSize=0, outlineColour=[0,0,0,0], round=0) {
         let element = this.getElement2("DIV")
 
         element.style = ""
         element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
         element.style.margin = 0
-        element.style.left = x-width/2+"px"
-        element.style.top = y-height/2+"px"
+        element.style.left = x-width/2-outlineSize+"px"
+        element.style.top = y-height/2-outlineSize+"px"
         element.style.width = width+"px"
         element.style.height = height+"px"
         element.style.backgroundColor = `rgba(${colour[0]}, ${colour[1]}, ${colour[2]}, ${colour[3]})`
+        element.style.borderRadius = round+"px"
         if (outlineSize > 0) {
             element.style.border = `${outlineSize}px solid rgba(${outlineColour[0]}, ${outlineColour[1]}, ${outlineColour[2]}, ${outlineColour[3]})`
         }
@@ -361,7 +362,9 @@ class UI {
                     element.textContent = this.placeholder
                 }
                 element.style.font = `${this.height*0.6}px ${ui.font}`
+                
                 element.style.border = `${this.outlineSize}px solid rgba(0,0,0,0)`
+                if (i == 1) element.style.border = `${this.outlineSize}px solid rgba(${this.outlineColour[0]}, ${this.outlineColour[1]}, ${this.outlineColour[2]}, ${this.outlineColour[3]})`
                 element.style.borderRadius = this.outlineSize*2+"px"
                 element.style.paddingTop = this.height/2-this.height*0.6/1.5+off[1]*2+"px"
                 element.style.paddingLeft = "2px"+off[0]*2
@@ -392,22 +395,6 @@ class UI {
                     outlineSize = this.height*0.6/ui.autoOutline
                 }
                 this.scrollLeft += (this.element.scrollLeft-this.scrollLeft) * Math.min(Math.max(delta*20, 0), 1)
-
-                this.drawText(0, [0, 0], this.textColour)
-                let dirs = ["top", "bottom", "left", "right"]
-                for (let dir of dirs) {
-                    if (ui.textShadow[dir] != 0) {
-                        let amt = ui.textShadow[dir]
-                        if (ui.textShadow[dir] == "auto") amt = outlineSize/3
-                        if (dir == "bottom") {
-                            this.drawText(0, [0, amt], [this.textColour[0]*ui.textShadow.multiply, this.textColour[1]*ui.textShadow.multiply, this.textColour[2]*ui.textShadow.multiply, this.textColour[3]])
-                            this.drawText(1, [0, amt], [this.textColour[0]*ui.textShadow.multiply, this.textColour[1]*ui.textShadow.multiply, this.textColour[2]*ui.textShadow.multiply, this.textColour[3]])
-
-                            // ui.text(x, y+amt, size, text, {...options, colour: [colour[0]*this.textShadow.multiply, colour[1]*this.textShadow.multiply, colour[2]*this.textShadow.multiply, colour[3]], doShadow: false, selectable: false})
-                        }
-                    }
-                }
-                let tElement = this.drawText(1, [0, 0], this.textColour)
                 
                 this.flashTime += delta
                 if (this.flashTime > 1) {
@@ -441,6 +428,23 @@ class UI {
                 this.element.style.backgroundColor = "transparent"
                 this.element.style.color = `rgba(0, 0, 0, 0)`  
 
+                this.drawText(0, [0, 0], this.textColour)
+                let dirs = ["top", "bottom", "left", "right"]
+                for (let dir of dirs) {
+                    if (ui.textShadow[dir] != 0) {
+                        let amt = ui.textShadow[dir]
+                        if (ui.textShadow[dir] == "auto") amt = outlineSize/3
+                        if (dir == "bottom") {
+                            this.drawText(0, [0, amt], [this.textColour[0]*ui.textShadow.multiply, this.textColour[1]*ui.textShadow.multiply, this.textColour[2]*ui.textShadow.multiply, this.textColour[3]])
+                            this.drawText(1, [0, amt], [this.textColour[0]*ui.textShadow.multiply, this.textColour[1]*ui.textShadow.multiply, this.textColour[2]*ui.textShadow.multiply, this.textColour[3]])
+
+                            // ui.text(x, y+amt, size, text, {...options, colour: [colour[0]*this.textShadow.multiply, colour[1]*this.textShadow.multiply, colour[2]*this.textShadow.multiply, colour[3]], doShadow: false, selectable: false})
+                        }
+                    }
+                }
+
+                let tElement = this.drawText(1, [0, 0], this.textColour)
+
                 let focused = document.activeElement == this.element
                 if (focused) {
                     function getCaretCoordinates(element, position) {
@@ -473,7 +477,7 @@ class UI {
                     if (this.element.selectionStart == this.element.selectionEnd) {
                         ui.rect(this.epos.x+2.5, this.height/2-(this.height/2-this.height*0.6/1.5), 4, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3])
                     } else {
-                        ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.5])
+                        ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.5], this.outlineSize/2, [0, 150, 255, 0.5], this.outlineSize)
                     }
                     ui.parent = ui.page
                 } 
