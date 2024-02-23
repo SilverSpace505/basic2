@@ -23,7 +23,7 @@ class Input {
 		addEventListener("mousemove", (event) => {this.mouseMove(event)})
 		addEventListener("mouseup", (event) => {this.mouseUp(event)})
 		addEventListener("touchstart", (event) => {this.touchStart(event)}, { passive: false })
-		addEventListener("touchmove", (event) => {this.touchMove(event)})
+		addEventListener("touchmove", (event) => {this.touchMove(event)}, {passive: false})
 		addEventListener("touchend", (event) => {this.touchEnd(event)})
 		addEventListener("touchcancel", (event) => {this.touchCancel(event)})
 		addEventListener("blur", (event) => {this.blur(event)})
@@ -134,7 +134,7 @@ class Input {
 		this.downTime = 0
 		this.mouse.x = event.touches[0].clientX
 		this.mouse.y = event.touches[0].clientY
-		if (!window.getSelection().toString()) event.preventDefault()
+		// if (!window.getSelection().toString()) event.preventDefault()
 
 		this.touches = {}
 		for (let touch of event.touches) {
@@ -151,7 +151,7 @@ class Input {
 
 			this.scroll(-deltaMove.x, -deltaMove.y)
 		}
-		
+		event.preventDefault()
 		this.mouse.x = event.touches[0].clientX
 		this.mouse.y = event.touches[0].clientY
 		this.mobile = true
