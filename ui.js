@@ -99,6 +99,8 @@ class UI {
         document.body.style.zoom = "100%"
         window.scrollTo(0, 0)
         this.page.style.margin = 0
+        this.page.style.left = 0
+        this.page.style.top = 0
         this.page.style.width = window.innerWidth
         this.page.style.height = window.innerHeight
     }
