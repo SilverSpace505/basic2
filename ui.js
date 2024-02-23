@@ -22,10 +22,10 @@ class UI {
                 background-color: rgba(0,150,255,0.25);
             }
         `)
-        let viewportMeta = document.createElement("meta")
-        viewportMeta.name = "viewport"
-        viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-        document.head.appendChild(viewportMeta)
+        // let viewportMeta = document.createElement("meta")
+        // viewportMeta.name = "viewport"
+        // viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        // document.head.appendChild(viewportMeta)
     }
     getImg(src) {
         if (src in this.images) {
