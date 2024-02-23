@@ -4,10 +4,11 @@ var lastTime = 0
 var delta = 0
 
 ui.setup()
-ui.setFont("custom", "font.ttf")
+ui.setFont("custom", "cool3.ttf")
 ui.textShadow.bottom = "auto"
 
 var testing = new ui.TextBox("type here...")
+var coolBtn = new ui.Button("rect", "Click Me", [0, 255, 0, 1])
 
 function update(timestamp) {
     requestAnimationFrame(update)
@@ -30,7 +31,7 @@ function update(timestamp) {
     testing.outlineSize = 5
     testing.draw()
 
-    
+    coolBtn.set(800, 100)
 
     ui.endFrame()
 }

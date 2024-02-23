@@ -288,18 +288,27 @@ class UI {
     }
 
     get Button() {
-        colour = [0, 0, 0, 0]
-        text = ""
-        type = "text"
         return class extends ui.Object2D {
+            colour = [0, 0, 0, 0]
+            text = ""
+            type = "text"
+            visible = false
             constructor(type, text, colour) {
                 super()
                 this.type = type
                 this.text = text
                 this.colour = colour
+                this.element = document.createElement("button")
+                this.element.style.display = "none"
+                ui.parent.appendChild(this.element)
             }
             draw() {
-
+                this.visible = true
+                this.element.style = ""
+                this.element.style.left = this.x+"px"
+                this.element.style.top = this.y+"px"
+                this.element.style.width = this.width+"px"
+                this.element.style.height = this.height+"px"
             }
         }
     }
@@ -322,13 +331,14 @@ class UI {
             epos = {x: 0, y: 0}
             flashTime = 0
             lastPos = ""
+            scrollLeft = 0
             constructor(placeholder="", colour=[150, 150, 150, 1]) {
                 super()
                 this.placeholder = placeholder
                 this.colour = colour
                 this.element = document.createElement("input")
                 this.element.style.display = "none"
-                ui.page.appendChild(this.element)
+                ui.parent.appendChild(this.element)
             }
             drawText(i, off, colour) {
                 let element = ui.getElement2("DIV")
@@ -372,7 +382,7 @@ class UI {
                 if (this.textOutlineSize == "auto") {
                     outlineSize = this.height*0.6/ui.autoOutline
                 }
-                element.scrollLeft = this.element.scrollLeft
+                element.scrollLeft = this.scrollLeft
                 if (i == 0) element.style.webkitTextStroke = `${outlineSize}px rgba(${this.textOutlineColour[0]}, ${this.textOutlineColour[1]}, ${this.textOutlineColour[2]}, ${this.textOutlineColour[3]})`
                 return element
             }
@@ -381,6 +391,7 @@ class UI {
                 if (this.textOutlineSize == "auto") {
                     outlineSize = this.height*0.6/ui.autoOutline
                 }
+                this.scrollLeft += (this.element.scrollLeft-this.scrollLeft) * Math.min(Math.max(delta*20, 0), 1)
 
                 this.drawText(0, [0, 0], this.textColour)
                 let dirs = ["top", "bottom", "left", "right"]
