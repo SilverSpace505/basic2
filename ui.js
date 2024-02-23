@@ -96,6 +96,8 @@ class UI {
         return (this.eorder - 1)
     }
     endFrame() {
+        document.body.style.zoom = "100%"
+        window.scrollTo(0, 0)
         this.eorder = 0
         document.body.style.overflow = "hidden"
         while (this.elements.length > this.eid) {
