@@ -347,7 +347,7 @@ class UI {
                 element.style.margin = 0
                 element.style.left = this.x+"px"
                 element.style.top = this.y+"px"
-                element.style.width = this.width-2+"px"
+                element.style.width = this.width-4+"px"
                 element.style.height = this.height+"px"
                 element.style.pointerEvents = "none"
                 if (i == 0) element.style.backgroundColor = `rgba(${this.colour[0]}, ${this.colour[1]}, ${this.colour[2]}, ${this.colour[3]})`
@@ -368,7 +368,7 @@ class UI {
                 if (i == 1) element.style.border = `${this.outlineSize}px solid rgba(${this.outlineColour[0]}, ${this.outlineColour[1]}, ${this.outlineColour[2]}, ${this.outlineColour[3]})`
                 element.style.borderRadius = this.outlineSize*2+"px"
                 element.style.paddingTop = off[1]*2+"px"
-                element.style.paddingLeft = 2+off[0]*2+"px"
+                element.style.paddingLeft = 4+off[0]*2+"px"
                 element.style.whiteSpace = "pre"
                 element.style.overflow = "hidden"
                 
@@ -443,6 +443,8 @@ class UI {
                 this.element.style.display = "flex"
                 this.element.style.alignItems = "center"
                 this.element.style.userSelect = "none"
+                this.element.style.padding = 0
+                this.element.style.paddingLeft = "4px"
                 this.element.style.mozUserSelect = "none"
                 this.element.style.msUserSelect = "none"
                 this.element.style.caretColor = "transparent"
@@ -451,7 +453,7 @@ class UI {
                 this.element.style.border = `${this.outlineSize}px solid rgba(${this.outlineColour[0]}, ${this.outlineColour[1]}, ${this.outlineColour[2]}, ${this.outlineColour[3]})`
                 this.element.style.borderRadius = this.outlineSize*2+"px"
                 this.element.style.backgroundColor = "transparent"
-                this.element.style.color = `white`  
+                this.element.style.color = `white` 
 
                 let focused = document.activeElement == this.element
                 if (focused) {
@@ -485,7 +487,7 @@ class UI {
                     if (this.element.selectionStart == this.element.selectionEnd) {
                         ui.rect(this.epos.x+2.5, this.height/2-(this.height/2-this.height*0.6/1.5), 4, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3])
                     } else {
-                        ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.2], this.outlineSize/2, [0, 150, 255, 0.5], this.outlineSize)
+                        ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2+4, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.2], this.outlineSize/2, [0, 150, 255, 0.5], this.outlineSize)
                     }
                     ui.parent = ui.page
                 } 
