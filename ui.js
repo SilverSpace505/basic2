@@ -15,6 +15,10 @@ class UI {
     customFonts = []
     resizeStop = 0
     setup() {
+        let viewportMeta = document.createElement("meta")
+        viewportMeta.name = "viewport"
+        viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        document.head.appendChild(viewportMeta)
         document.body.style.overflow = "hidden"
         this.page = document.getElementById("page")
         this.parent = this.page
@@ -23,10 +27,6 @@ class UI {
                 background-color: rgba(0,150,255,0.25);
             }
         `)
-        let viewportMeta = document.createElement("meta")
-        viewportMeta.name = "viewport"
-        viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-        document.head.appendChild(viewportMeta)
     }
     getImg(src) {
         if (src in this.images) {
