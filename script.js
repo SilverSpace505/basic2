@@ -20,6 +20,8 @@ function update(timestamp) {
     ui.textShadow.colour = [0, 150, 255, 1]
     ui.textShadow.multiply = 1
     ui.text(20, 70, 100, "Basic 2")
+    ui.textShadow.colour = [255, 0, 0, 1]
+    ui.text(20, 130, 20, "Elements: "+ui.elements.length)
     ui.textShadow.colour = "auto"
     ui.textShadow.multiply = 0.5
 
