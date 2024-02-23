@@ -14,6 +14,7 @@ var coolBtn = new ui.Button("rect", "Click Me", [0, 255, 0, 1])
 
 function update(timestamp) {
     requestAnimationFrame(update)
+    ui.startFrame()
 
     let w = window.innerWidth
     let h = window.innerHeight
