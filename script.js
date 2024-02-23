@@ -16,15 +16,18 @@ function update(timestamp) {
     requestAnimationFrame(update)
     ui.startFrame()
 
-    let w = window.innerWidth
-    let h = window.innerHeight
+    if (ui.resizeStop <= 0) {
+        let w = window.innerWidth
+        let h = window.innerHeight
 
-    let aspect = w / targetSize.x
-    
-    su = aspect
-    if (su > h / targetSize.y) {
-        su = h / targetSize.y
+        let aspect = w / targetSize.x
+        
+        su = aspect
+        if (su > h / targetSize.y) {
+            su = h / targetSize.y
+        }
     }
+    
     
     delta = (timestamp - lastTime) / 1000
     lastTime = timestamp

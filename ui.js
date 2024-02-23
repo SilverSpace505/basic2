@@ -13,6 +13,7 @@ class UI {
     page
     parent
     customFonts = []
+    resizeStop = 0
     setup() {
         document.body.style.overflow = "hidden"
         this.page = document.getElementById("page")
@@ -103,8 +104,9 @@ class UI {
         this.page.style.margin = 0
         this.page.style.left = 0
         this.page.style.top = 0
-        this.page.style.width = window.innerWidth
-        this.page.style.height = window.innerHeight
+        this.resizeStop -= delta
+        if (this.resizeStop <= 0) this.page.style.width = window.innerWidth
+        if (this.resizeStop <= 0) this.page.style.height = window.innerHeight
         this.page.style.overflow = "hidden"
     }
     endFrame() {
@@ -494,6 +496,7 @@ class UI {
                     let spos = getCaretCoordinates(this.element, this.element.selectionStart)
                     let epos = getCaretCoordinates(this.element, this.element.selectionEnd)
                     if (focused && !this.focused) {
+                        ui.resizeStop = 0.5
                         this.flashTime = 0
                         this.spos = {...spos}
                         this.epos = {...epos}
