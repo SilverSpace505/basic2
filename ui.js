@@ -7,7 +7,7 @@ class UI {
     textOutlines = {}
     font = "sans-serif,serif"
     styleE
-    textShadow = {top: 0, bottom: 0, left: 0, right: 0, multiply: 0.5}
+    textShadow = {top: 0, bottom: 0, left: 0, right: 0, colour: "auto", multiply: 0.5}
     images = {}
     eorder = 0
     page
@@ -173,12 +173,14 @@ class UI {
 
         if (doShadow) {
             let dirs = ["top", "bottom", "left", "right"]
+            let colour2 = this.textShadow.colour
+            if (colour2 == "auto") colour2 = colour
             for (let dir of dirs) {
                 if (this.textShadow[dir] != 0) {
                     let amt = this.textShadow[dir]
                     if (this.textShadow[dir] == "auto") amt = outlineSize/3
                     if (dir == "bottom") {
-                        ui.text(x, y+amt, size, text, {...options, colour: [colour[0]*this.textShadow.multiply, colour[1]*this.textShadow.multiply, colour[2]*this.textShadow.multiply, colour[3]], doShadow: false, selectable: false})
+                        ui.text(x, y+amt, size, text, {...options, colour: [colour2[0]*this.textShadow.multiply, colour2[1]*this.textShadow.multiply, colour2[2]*this.textShadow.multiply, colour2[3]], doShadow: false, selectable: false})
                     }
                 }
             }
@@ -337,8 +339,8 @@ class UI {
                 element.style.zIndex = ui.getOrder()
                 element.style.position = "absolute"
                 element.style.margin = 0
-                element.style.left = this.x+"px"
-                element.style.top = this.y+"px"
+                element.style.left = this.x-this.width/2+"px"
+                element.style.top = this.y-this.height/2+"px"
                 element.style.width = this.width+"px"
                 element.style.height = this.height+"px"
                 element.style.pointerEvents = "none"
@@ -401,13 +403,15 @@ class UI {
 
                 this.drawText(0, [0, 0], this.textColour)
                 let dirs = ["top", "bottom", "left", "right"]
+                let colour2 = ui.textShadow.colour
+                if (colour2 == "auto") colour2 = this.textColour
                 for (let dir of dirs) {
                     if (ui.textShadow[dir] != 0) {
                         let amt = ui.textShadow[dir]
                         if (ui.textShadow[dir] == "auto") amt = outlineSize/3
                         if (dir == "bottom") {
-                            this.drawText(0, [0, amt], [this.textColour[0]*ui.textShadow.multiply, this.textColour[1]*ui.textShadow.multiply, this.textColour[2]*ui.textShadow.multiply, this.textColour[3]])
-                            this.drawText(1, [0, amt], [this.textColour[0]*ui.textShadow.multiply, this.textColour[1]*ui.textShadow.multiply, this.textColour[2]*ui.textShadow.multiply, this.textColour[3]])
+                            this.drawText(0, [0, amt], [colour2[0]*ui.textShadow.multiply, colour2[1]*ui.textShadow.multiply, colour2[2]*ui.textShadow.multiply, colour2[3]])
+                            this.drawText(1, [0, amt], [colour2[0]*ui.textShadow.multiply, colour2[1]*ui.textShadow.multiply, colour2[2]*ui.textShadow.multiply, colour2[3]])
 
                             // ui.text(x, y+amt, size, text, {...options, colour: [colour[0]*this.textShadow.multiply, colour[1]*this.textShadow.multiply, colour[2]*this.textShadow.multiply, colour[3]], doShadow: false, selectable: false})
                         }
@@ -424,12 +428,12 @@ class UI {
                 this.visible = true
                 this.element.spellcheck = false
                 this.element.style = ""
-                this.element.placeholder = this.placeholder
+                // this.element.placeholder = this.placeholder
                 // this.element.style.display = "block"
                 this.element.style.zIndex = ui.getOrder()
                 // this.element.style.display = ""
-                this.element.style.left = this.x+"px"
-                this.element.style.top = this.y+"px"
+                this.element.style.left = this.x-this.width/2+"px"
+                this.element.style.top = this.y-this.height/2+"px"
                 this.element.style.width = this.width+"px"
                 this.element.style.height = this.height+"px"
                 this.element.width = this.width
