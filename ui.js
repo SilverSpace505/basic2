@@ -12,6 +12,7 @@ class UI {
     eorder = 0
     page
     parent
+    customFonts = []
     setup() {
         document.body.style.overflow = "hidden"
         this.page = document.getElementById("page")
@@ -39,13 +40,14 @@ class UI {
     }
     setFont(font, path) {
         this.font = font
-        if (font.includes("custom")) {
-            if (this.styleE) document.head.removeChild(this.styleE)
+        if (font.includes("custom") && !this.customFonts.includes(font)) {
+            this.customFonts.push(font)
+            // if (this.styleE) document.head.removeChild(this.styleE)
             this.styleE = document.createElement("style")
             this.styleE.appendChild(document.createTextNode(""))
             this.styleE.innerHTML = `
                 @font-face {
-                    font-family: custom;
+                    font-family: ${font};
                     src: url("${path}");
                 }
             `
@@ -362,7 +364,7 @@ class UI {
                 if (i == 1) element.style.border = `${this.outlineSize}px solid rgba(${this.outlineColour[0]}, ${this.outlineColour[1]}, ${this.outlineColour[2]}, ${this.outlineColour[3]})`
                 element.style.borderRadius = this.outlineSize*2+"px"
                 element.style.paddingTop = off[1]*2+"px"
-                element.style.paddingLeft = 4+off[0]*2+"px"
+                element.style.paddingLeft = this.outlineSize+off[0]*2+"px"
                 element.style.whiteSpace = "pre"
                 element.style.overflow = "hidden"
                 
@@ -444,7 +446,7 @@ class UI {
                 this.element.style.alignItems = "center"
                 this.element.style.userSelect = "none"
                 this.element.style.padding = 0
-                this.element.style.paddingLeft = "4px"
+                this.element.style.paddingLeft = this.outlineSize+"px"
                 this.element.style.mozUserSelect = "none"
                 this.element.style.msUserSelect = "none"
                 this.element.style.caretColor = "transparent"
@@ -486,7 +488,7 @@ class UI {
                     
                     ui.parent = tElement
                     if (this.element.selectionStart == this.element.selectionEnd) {
-                        ui.rect(this.epos.x+4, this.height/2-(this.height/2-this.height*0.6/1.5), 4, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3])
+                        ui.rect(this.epos.x+4, this.height/2-(this.height/2-this.height*0.6/1.5), this.outlineSize, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3])
                     } else {
                         ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2+2, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.2], this.outlineSize/2, [0, 150, 255, 0.5], this.outlineSize)
                     }

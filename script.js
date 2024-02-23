@@ -3,6 +3,8 @@ var time = 0
 var lastTime = 0
 var delta = 0
 
+var targetSize = {x: 1500, y: 1000}
+
 ui.setup()
 ui.setFont("custom", "font.ttf")
 ui.textShadow.bottom = "auto"
@@ -12,6 +14,16 @@ var coolBtn = new ui.Button("rect", "Click Me", [0, 255, 0, 1])
 
 function update(timestamp) {
     requestAnimationFrame(update)
+
+    let w = window.innerWidth
+    let h = window.innerHeight
+
+    let aspect = w / targetSize.x
+    
+    su = aspect
+    if (su > h / targetSize.y) {
+        su = h / targetSize.y
+    }
     
     delta = (timestamp - lastTime) / 1000
     lastTime = timestamp
@@ -19,29 +31,30 @@ function update(timestamp) {
 
     ui.textShadow.colour = [0, 150, 255, 1]
     ui.textShadow.multiply = 1
-    ui.text(20, 70, 100, "Basic 2")
+    ui.text(20*su, 95*su, 150*su, "Basic 2")
     ui.textShadow.colour = [255, 0, 0, 1]
-    ui.text(20, 130, 20, "Elements: "+ui.elements.length)
+    ui.text(20*su, 200*su, 40*su, "Elements: "+ui.elements.length)
     ui.textShadow.colour = "auto"
     ui.textShadow.multiply = 0.5
 
-    for (let i = 0; i < 1; i++) {
-        ui.text(500+Math.sin(time+i)*50, 550, 100, "Silver")
-    }
+    ui.text(600*su+Math.sin(time)*50*su, 700*su, 100*su, "Silver", {align: "center"})
+    ui.setFont("custom-speedwing", "speedwing-font.ttf")
+    ui.text(600*su+Math.sin(time+1)*50*su, 800*su, 100*su, "Speedwing", {align: "center"})
+    ui.setFont("custom")
 
-    ui.text(100, 200+Math.sin(time+1)*10, 20, "This, is a very cool piece of text lol, This, is a very cool piece of text lol, This, is a very cool piece of text lol, This, is a very cool piece of text lol, and it wraps too!", {wrap: 300})
+    ui.text(100*su, 300*su+Math.sin(time+1)*10*su, 30*su, "This, is a very cool piece of text lol, This, is a very cool piece of text lol, This, is a very cool piece of text lol, This, is a very cool piece of text lol, and it wraps too!", {wrap: 500*su})
 
-    ui.img(600, 200, 200+Math.sin(time+2)*50, 200+Math.sin(time+2)*50, "tileset.png", [0, 0, 64, 64])
+    ui.img(800*su, 175*su, 250*su+Math.sin(time+2)*50*su, 250*su+Math.sin(time+2)*50*su, "tileset.png", [0, 0, 64, 64])
 
-    ui.rect(800, 400, 100, 100, [255, 0, 0, 1])
+    ui.rect(800*su, 525*su, 100*su, 100*su, [255, 0, 0, 1])
 
-    ui.img(200, 500, 200, 200, "image-test.webp")
+    ui.img(200*su, 600*su, 200*su, 200*su, "image-test.webp")
 
-    testing.set(400, 400, 400, 50)
-    testing.outlineSize = 5
+    testing.set(600*su, 550*su, 400*su, 50*su)
+    testing.outlineSize = 5*su
     testing.draw()
 
-    coolBtn.set(800, 100)
+    // coolBtn.set(800, 100)
 
     ui.endFrame()
 }
