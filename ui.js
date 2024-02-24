@@ -434,9 +434,9 @@ class UI {
                 let focused = document.activeElement == this.element
 
                 if (input.mobile && focused) {
-                    this.focusA += (1 - this.focusA) * Math.min(Math.max(delta*10, 0), 1)
+                    this.focusA += (1 - this.focusA) * Math.min(Math.max(delta*25, 0), 1)
                 } else {
-                    this.focusA += (0 - this.focusA) * Math.min(Math.max(delta*10, 0), 1)
+                    this.focusA += (0 - this.focusA) * Math.min(Math.max(delta*25, 0), 1)
                     if (this.focusA < 0.001) {
                         this.focusA = 0
                     }
