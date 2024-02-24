@@ -442,6 +442,7 @@ class UI {
                         this.focusA = 0
                     }
                 }
+                // update code force
 
                 if (this.focusA > 0) {
                     ui.eorder += 10000
