@@ -70,21 +70,26 @@ class UI {
         if (id >= this.elements.length) {
             let element = document.createElement("div")
             this.elements.push(element)
+            element.drawn = true
             this.parent.appendChild(element)
             this.eid++
             return element
         } else {
             this.eid++
+            this.elements[id].drawn = true
             return this.elements[id]
         }
     }
     getElement2(type="DIV", id=this.eid) {
         let element = this.getElement(id)
+        element.style = ""
+        element.textContent = ""
         if (element.nodeName != type) {
             let nElement = document.createElement(type.toLowerCase())
             element.parentNode.removeChild(element)
             ui.parent.appendChild(nElement)
             element = nElement
+            element.drawn = true
             this.elements[this.eid-1] = element
         }
         if (element.parentNode != this.parent) {
@@ -108,24 +113,31 @@ class UI {
         if (this.resizeStop <= 0) this.page.style.width = window.innerWidth
         if (this.resizeStop <= 0) this.page.style.height = window.innerHeight
         this.page.style.overflow = "hidden"
+
+        for (let element of this.elements) {
+            element.drawn = false
+        }
     }
     endFrame() {
         this.eorder = 0
         document.body.style.overflow = "hidden"
-        while (this.elements.length > this.eid) {
-            if (this.elements[this.elements.length-1].parentNode) {
-                this.elements[this.elements.length-1].parentNode.removeChild(this.elements[this.elements.length-1])
+        for (let i = 0; i < this.elements.length; i++) {
+            if (!this.elements[i].drawn) {
+                if (this.elements[i].parentNode) {
+                    this.elements[i].parentNode.removeChild(this.elements[i])
+                }
+                this.elements.splice(i, 1)
+                i--
             }
-            this.elements.splice(this.elements.length-1, 1)
         }
         this.eid = 0
 
-        for (let id in this.stableElements) {
-            this.stableElements[id].visible = this.stableElements[id].drawn
-            if (!this.stableElements[id].visible) {
-                this.stableElements[id].hide()
-            }
-        }
+        // for (let id in this.stableElements) {
+        //     this.stableElements[id].visible = this.stableElements[id].drawn
+        //     if (!this.stableElements[id].visible) {
+        //         this.stableElements[id].hide()
+        //     }
+        // }
         // let list = Array.from(this.page.children)
         // let orders = []
         // for (let node of list) {
@@ -139,7 +151,6 @@ class UI {
     rect(x, y, width, height, colour, outlineSize=0, outlineColour=[0,0,0,0], round=0) {
         let element = this.getElement2("DIV")
 
-        element.style = ""
         element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
         element.style.margin = 0
@@ -163,7 +174,6 @@ class UI {
         if (outlineSize > 0) {
             let oElement = this.getElement2("P")
 
-            oElement.style = ""
             oElement.style.zIndex = this.getOrder()
             oElement.style.position = "absolute"
             oElement.style.margin = 0
@@ -208,7 +218,6 @@ class UI {
 
         let element = this.getElement2("P")
 
-        element.style = ""
         element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
         element.style.margin = 0
@@ -244,7 +253,6 @@ class UI {
         if (clip != "none") img = this.getImg(src)
         let element = this.getElement2("DIV")
 
-        element.style = ""
         element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
         element.style.margin = 0
@@ -355,7 +363,6 @@ class UI {
             }
             drawText(i, off, colour, bg=false) {
                 let element = ui.getElement2("DIV")
-                element.style = ""
                 element.style.zIndex = ui.getOrder()
                 element.style.position = "absolute"
                 element.style.margin = 0

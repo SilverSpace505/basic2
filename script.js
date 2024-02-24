@@ -10,6 +10,7 @@ ui.setFont("custom", "font.ttf")
 ui.textShadow.bottom = "auto"
 
 var testing = new ui.TextBox("type here...")
+var testing2 = new ui.TextBox("also type here...")
 var coolBtn = new ui.Button("rect", "Click Me", [0, 255, 0, 1])
 
 function update(timestamp) {
@@ -50,13 +51,17 @@ function update(timestamp) {
 
     ui.img(800*su, 175*su, 250*su+Math.sin(time+2)*50*su, 250*su+Math.sin(time+2)*50*su, "tileset.png", [0, 0, 64, 64])
 
-    ui.rect(800*su, 525*su, 100*su, 100*su, [255, 0, 0, 1])
+    if (Math.sin(time) > 0) ui.rect(800*su, 525*su, 100*su, 100*su, [255, 0, 0, 1])
 
-    ui.img(200*su, 600*su, 200*su, 200*su, "image-test.webp")
+    ui.img(200*su, 600*su, 200*su, 200*su, "image-test.webp", [500/2 - (250+Math.sin(time)*250)/2, 500/2 - (250+Math.sin(time)*250)/2, 250+Math.sin(time)*250, 250+Math.sin(time)*250])
 
     testing.set(800*su, 50*su, 400*su, 50*su)
     testing.outlineSize = 5*su
     testing.draw()
+
+    testing2.set(1000*su, 400*su, 400*su, 50*su)
+    testing2.outlineSize = 5*su
+    testing2.draw()
 
     // coolBtn.set(800, 100)
 
