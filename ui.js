@@ -148,8 +148,12 @@ class UI {
         //     this.page.appendChild(list[i])
         // }
     }
-    rect(x, y, width, height, colour, outlineSize=0, outlineColour=[0,0,0,0], round=0) {
+    rect(x, y, width, height, colour, outlineSize=0, outlineColour=[0,0,0,0], round="auto") {
         let element = this.getElement2("DIV")
+
+        if (round == "auto") {
+            round = outlineSize
+        }
 
         element.style.zIndex = this.getOrder()
         element.style.position = "absolute"
@@ -514,7 +518,7 @@ class UI {
                     
                     ui.parent = tElement
                     if (this.element.selectionStart == this.element.selectionEnd) {
-                        ui.rect(this.epos.x+4, this.height/2-(this.height/2-this.height*0.6/1.5), this.outlineSize, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3])
+                        ui.rect(this.epos.x+4, this.height/2-(this.height/2-this.height*0.6/1.5), this.outlineSize/4, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3], this.outlineSize/2, [0,0,0,0])
                     } else {
                         ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2+2, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.2], this.outlineSize/2, [0, 150, 255, 0.5], this.outlineSize)
                     }
