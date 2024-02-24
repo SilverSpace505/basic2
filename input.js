@@ -32,6 +32,7 @@ class Input {
 		addEventListener("wheel", (event) => {this.wheel(event)})
 		addEventListener("paste", (event) => {this.paste(event)})
 		addEventListener("contextmenu", (event) => {this.contextmenu(event)})
+        addEventListener("focus", (event) => {event.preventDefault()}, {passive: false})
 	}
 	setGlobals() {
 		window.keys = this.keys
