@@ -14,6 +14,7 @@ class UI {
     parent
     customFonts = []
     resizeStop = 0
+    focusA = 0
     setup() {
         let viewportMeta = document.createElement("meta")
         viewportMeta.name = "viewport"
@@ -117,8 +118,21 @@ class UI {
         for (let element of this.elements) {
             element.drawn = false
         }
+
+        if (input.mobile && document.activeElement != document.body) {
+            this.focusA += (1 - this.focusA) * Math.min(Math.max(delta*10, 0), 1)
+        } else if (input.mobile) {
+            this.focusA += (0 - this.focusA) * Math.min(Math.max(delta*10, 0), 1)
+        }
+        if (this.focusA < 0.01) {
+            this.focusA = 0
+        }
     }
     endFrame() {
+        if (this.focusA > 0) {
+            let cover = ui.rect(window.innerWidth/2, window.innerHeight/2, window.innerWidth, window.innerHeight, [0, 0, 0, this.focusA/2])
+        }
+
         this.eorder = 0
         document.body.style.overflow = "hidden"
         for (let i = 0; i < this.elements.length; i++) {
@@ -357,6 +371,7 @@ class UI {
             lastPos = ""
             scrollLeft = 0
             scrollLeftT = 0
+            focusA = 0
             constructor(placeholder="", colour=[150, 150, 150, 1]) {
                 super()
                 this.placeholder = placeholder
@@ -416,6 +431,22 @@ class UI {
                 return element
             }
             draw() {
+                let focused = document.activeElement == this.element
+
+                if (input.mobile && focused) {
+                    this.focusA += (1 - this.focusA) * Math.min(Math.max(delta*10, 0), 1)
+                } else {
+                    this.focusA += (0 - this.focusA) * Math.min(Math.max(delta*10, 0), 1)
+                    if (this.focusA < 0.001) {
+                        this.focusA = 0
+                    }
+                }
+
+                if (this.focusA > 0) {
+                    ui.eorder += 10000
+                }
+                this.x = this.x + (window.innerWidth/2 - this.x) * this.focusA
+                this.y = this.y + (10*su+this.height/2 - this.y) * this.focusA
 
                 this.scrollLeftT += (this.element.scrollLeft - this.scrollLeft)
                
@@ -487,7 +518,6 @@ class UI {
                 // this.element.style.color = `white` 
                 this.element.style.color = "rgba(0,0,0,0)"
 
-                let focused = document.activeElement == this.element
                 if (focused) {
                     function getCaretCoordinates(element, position) {
                         var rect = element.getBoundingClientRect();
@@ -524,6 +554,9 @@ class UI {
                     }
                     ui.parent = ui.page
                 } 
+                if (this.focusA > 0) {
+                    ui.eorder -= 10000
+                }
                 this.focused = focused
             }
         }
