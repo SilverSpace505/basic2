@@ -548,7 +548,7 @@ class UI {
                     
                     ui.parent = tElement
                     if (this.element.selectionStart == this.element.selectionEnd) {
-                        ui.rect(this.epos.x+4, this.height/2-(this.height/2-this.height*0.6/1.5), this.outlineSize/4, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3], this.outlineSize/2, [0,0,0,0])
+                        ui.rect(this.epos.x+5*su, this.height/2-(this.height/2-this.height*0.6/1.5), this.outlineSize/4, this.height*0.65, [255, 255, 255, 1-Math.sin(Math.max(this.flashTime, 0)*Math.PI)**3], this.outlineSize/2, [0,0,0,0])
                     } else {
                         ui.rect(this.spos.x+(this.epos.x-this.spos.x)/2+2, this.height/2-(this.height/2-this.height*0.6/1.5), this.epos.x-this.spos.x, this.height*0.65, [0, 150, 255, 0.2], this.outlineSize/2, [0, 150, 255, 0.5], this.outlineSize)
                     }
