@@ -54,7 +54,7 @@ function update(timestamp) {
 
     ui.img(200*su, 600*su, 200*su, 200*su, "image-test.webp")
 
-    testing.set(800*su, 100*su, 400*su, 50*su)
+    testing.set(800*su, 50*su, 400*su, 50*su)
     testing.outlineSize = 5*su
     testing.draw()
 
