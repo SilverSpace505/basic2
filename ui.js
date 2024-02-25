@@ -504,8 +504,8 @@ class UI {
                 // this.element.style.display = "block"
                 this.element.style.zIndex = ui.getOrder()
                 // this.element.style.display = ""
-                this.element.style.left = this.x-this.width/2+"px"
-                this.element.style.top = focused ? this.y-this.height/2+"px" : "-1000px"
+                this.element.style.left = focused ? this.x-this.width/2+"px" : "-1000px"
+                this.element.style.top = focused ? this.y-this.height/2+"px" : ""
                 this.element.style.width = this.width+"px"
                 this.element.style.height = this.height+"px"
                 this.element.width = this.width
