@@ -386,10 +386,11 @@ class UI {
 
                 this.cElement = document.createElement("div")
                 this.cElement.style.display = "none"
-                this.cElement.onclick = (event) => {
+                this.cElement.addEventListener("click", (event) => {
+                    alert("ello")
                     this.element.style.top = "0px"
                     this.element.focus()
-                }
+                })
                 ui.parent.appendChild(this.cElement)
             }
             drawText(i, off, colour, bg=false) {
