@@ -378,11 +378,10 @@ class UI {
                 this.colour = colour
                 this.element = document.createElement("input")
                 this.element.style.display = "none"
-                this.element.onclick = () => {
-                    if (document.activeElement == document.body) {
-                        this.element.style.top = "0px"
-                    }
-                }
+                this.element.addEventListener("touchstart", (event) => {
+                    event.preventDefault()
+                    this.element.style.top = "0px"
+                }, {passive: false})
                 ui.parent.appendChild(this.element)
             }
             drawText(i, off, colour, bg=false) {
