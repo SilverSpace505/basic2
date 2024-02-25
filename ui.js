@@ -390,6 +390,24 @@ class UI {
                     // this.element.style.top = "0px"
                     // this.element.focus()
                 }, {passive: false})
+                this.element.addEventListener("click", (event) => {
+                    event.preventDefault()
+                    // this.element.blur()
+                    // this.element.style.top = "0px"
+                    // this.element.focus()
+                }, {passive: false})
+                this.element.addEventListener("touchmove", (event) => {
+                    event.preventDefault()
+                    // this.element.blur()
+                    // this.element.style.top = "0px"
+                    // this.element.focus()
+                }, {passive: false})
+                this.element.addEventListener("touchcancel", (event) => {
+                    event.preventDefault()
+                    // this.element.blur()
+                    // this.element.style.top = "0px"
+                    // this.element.focus()
+                }, {passive: false})
                 ui.parent.appendChild(this.element)
             }
             drawText(i, off, colour, bg=false) {
