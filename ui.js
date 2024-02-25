@@ -378,6 +378,7 @@ class UI {
                 this.colour = colour
                 this.element = document.createElement("input")
                 this.element.style.display = "none"
+                // pls magically fix
                 // this.element.addEventListener("click", function(event) {
                 //     event.preventDefault()
                 //     alert("Hello")
