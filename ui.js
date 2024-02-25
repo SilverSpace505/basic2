@@ -111,8 +111,8 @@ class UI {
         this.page.style.left = 0
         this.page.style.top = 0
         this.resizeStop -= delta
-        if (this.resizeStop <= 0) this.page.style.width = window.innerWidth
-        if (this.resizeStop <= 0) this.page.style.height = window.innerHeight
+        if (this.resizeStop <= 0) this.page.style.width = window.innerWidth+"px"
+        if (this.resizeStop <= 0) this.page.style.height = window.innerHeight+"px"
         this.page.style.overflow = "hidden"
 
         for (let element of this.elements) {
