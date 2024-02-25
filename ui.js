@@ -87,7 +87,7 @@ class UI {
         element.textContent = ""
         if (element.nodeName != type) {
             let nElement = document.createElement(type.toLowerCase())
-            element.parentNode.removeChild(element)
+            if (element.parentNode) element.parentNode.removeChild(element)
             ui.parent.appendChild(nElement)
             element = nElement
             element.drawn = true
@@ -393,6 +393,7 @@ class UI {
                 this.cElement.addEventListener("mousedown", (event) => {
                     this.element.style.top = "0px"
                     this.element.focus()
+                    event.preventDefault()
                 })
                 ui.parent.appendChild(this.cElement)
             }
