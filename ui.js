@@ -322,6 +322,9 @@ class UI {
                     y > this.y-this.height/2 && y < this.y+this.height/2
                 )
             }
+            hovered() {
+                return this.hasPoint(input.mouse.x, input.mouse.y)
+            }
         }
     }
 
@@ -378,11 +381,6 @@ class UI {
                 this.colour = colour
                 this.element = document.createElement("input")
                 this.element.style.display = "none"
-                // pls magically fix
-                // this.element.addEventListener("click", function(event) {
-                //     event.preventDefault()
-                //     alert("Hello")
-                // })
                 ui.parent.appendChild(this.element)
             }
             drawText(i, off, colour, bg=false) {
@@ -436,6 +434,12 @@ class UI {
                 return element
             }
             draw() {
+                if (this.hovered() && input.mouse.lclick && document.activeElement != this.element) {
+                    this.element.style.top = "0px"
+                    this.element.style.display = "flex"
+                    this.element.focus()
+                }
+                
                 let focused = document.activeElement == this.element
 
                 if (input.mobile && focused) {
@@ -509,7 +513,7 @@ class UI {
                 this.element.height = this.height
                 this.element.style.position = "absolute"
                 this.element.style.margin = 0
-                this.element.style.display = "flex"
+                this.element.style.display = focused ? "flex" : "none"
                 this.element.tabIndex = -1
                 this.element.style.alignItems = "center"
                 this.element.style.userSelect = "none"
@@ -526,6 +530,8 @@ class UI {
                 this.element.style.backgroundColor = "transparent"
                 // this.element.style.color = `white` 
                 this.element.style.color = "rgba(0,0,0,0)"
+
+                
 
                 if (focused) {
                     function getCaretCoordinates(element, position) {

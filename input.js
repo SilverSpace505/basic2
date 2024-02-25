@@ -30,7 +30,7 @@ class Input {
 		addEventListener("keydown", (event) => {this.keydown(event)})
 		addEventListener("keyup", (event) => {this.keyup(event)})
 		addEventListener("wheel", (event) => {this.wheel(event)})
-		addEventListener("paste", (event) => {this.paste(event)})
+		// addEventListener("paste", (event) => {this.paste(event)})
 		addEventListener("contextmenu", (event) => {this.contextmenu(event)})
         addEventListener("focus", (event) => {event.preventDefault()}, {passive: false})
 	}
@@ -135,7 +135,7 @@ class Input {
 		this.downTime = 0
 		this.mouse.x = event.touches[0].clientX
 		this.mouse.y = event.touches[0].clientY
-		// if (!window.getSelection().toString()) event.preventDefault()
+		if (!window.getSelection().toString()) event.preventDefault()
 
 		this.touches = {}
 		for (let touch of event.touches) {
@@ -220,7 +220,7 @@ class Input {
 			this.keysRaw[event.key] = true
 		}
 		if (event.code == "Tab") {
-			event.preventDefault()
+			// event.preventDefault()
 		}
 	}
 	keyup(event) {

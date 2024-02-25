@@ -66,6 +66,7 @@ function update(timestamp) {
     // coolBtn.set(800, 100)
 
     ui.endFrame()
+    input.updateInput()
 }
 
 requestAnimationFrame(update)
