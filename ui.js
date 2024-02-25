@@ -487,7 +487,7 @@ class UI {
                     this.flashTime = 0
                 }
 
-                this.drawText(0, [0, 0], this.textColour, true)
+                let tElement = this.drawText(0, [0, 0], this.textColour, true)
                 let dirs = ["top", "bottom", "left", "right"]
                 let colour2 = ui.textShadow.colour
                 if (colour2 == "auto") colour2 = this.textColour
@@ -497,14 +497,14 @@ class UI {
                         if (ui.textShadow[dir] == "auto") amt = outlineSize/3
                         if (dir == "bottom") {
                             this.drawText(0, [0, amt], [colour2[0]*ui.textShadow.multiply, colour2[1]*ui.textShadow.multiply, colour2[2]*ui.textShadow.multiply, colour2[3]])
-                            this.drawText(1, [0, amt], [colour2[0]*ui.textShadow.multiply, colour2[1]*ui.textShadow.multiply, colour2[2]*ui.textShadow.multiply, colour2[3]])
+                            tElement = this.drawText(1, [0, amt], [colour2[0]*ui.textShadow.multiply, colour2[1]*ui.textShadow.multiply, colour2[2]*ui.textShadow.multiply, colour2[3]])
 
                             // ui.text(x, y+amt, size, text, {...options, colour: [colour[0]*this.textShadow.multiply, colour[1]*this.textShadow.multiply, colour[2]*this.textShadow.multiply, colour[3]], doShadow: false, selectable: false})
                         }
                     }
                 }
 
-                let tElement = this.drawText(1, [0, 0], this.textColour)
+                // let tElement = this.drawText(1, [0, 0], this.textColour)
 
                 if (this.element.selectionStart+","+this.element.selectionEnd != this.lastText) {
                     this.flashTime = -0.5
