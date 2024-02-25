@@ -19,7 +19,7 @@ class UI {
         let viewportMeta = document.createElement("meta")
         viewportMeta.name = "viewport"
         viewportMeta.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover"
-        // document.head.appendChild(viewportMeta)
+        document.head.appendChild(viewportMeta)
         document.body.style.overflow = "hidden"
         this.page = document.getElementById("page")
         this.parent = this.page
@@ -104,7 +104,7 @@ class UI {
     }
     startFrame() {
         document.body.style.zoom = "100%"
-        // window.scrollTo(0, 0)
+        window.scrollTo(0, 0)
         
         this.page.style.position = "absolute"
         this.page.style.margin = 0
@@ -381,6 +381,7 @@ class UI {
                 this.element.addEventListener("touchstart", (event) => {
                     event.preventDefault()
                     this.element.style.top = "0px"
+                    this.element.focus()
                 }, {passive: false})
                 ui.parent.appendChild(this.element)
             }
