@@ -504,7 +504,7 @@ class UI {
                     }
                 }
 
-                // this.drawText(1, [0, 0], this.textColour)
+                this.drawText(1, [0, ui.textShadow["bottom"]], this.textColour)
 
                 if (this.element.selectionStart+","+this.element.selectionEnd != this.lastText) {
                     this.flashTime = -0.5
