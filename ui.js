@@ -378,6 +378,11 @@ class UI {
                 this.colour = colour
                 this.element = document.createElement("input")
                 this.element.style.display = "none"
+                this.element.onclick = () => {
+                    if (document.activeElement == document.body) {
+                        this.element.style.top = "0px"
+                    }
+                }
                 ui.parent.appendChild(this.element)
             }
             drawText(i, off, colour, bg=false) {
@@ -402,7 +407,7 @@ class UI {
                 if (this.element.value == "") {
                     element.textContent = this.placeholder
                 }
-                element.style.font = `${Math.max(this.height*0.6, 16)}px ${ui.font}`
+                element.style.font = `${this.height*0.6}px ${ui.font}`
                 
                 element.style.border = `${this.outlineSize}px solid rgba(0,0,0,0)`
                 if (i == 1) element.style.border = `${this.outlineSize}px solid rgba(${this.outlineColour[0]}, ${this.outlineColour[1]}, ${this.outlineColour[2]}, ${this.outlineColour[3]})`
@@ -513,7 +518,7 @@ class UI {
                 this.element.style.msUserSelect = "none"
                 this.element.style.caretColor = "transparent"
                 this.element.style.fontSize = "16px"
-                this.element.style.font = `${Math.max(this.height*0.6, 16)}px ${ui.font}`
+                this.element.style.font = `${this.height*0.6}px ${ui.font}`
                 this.element.style.boxSizing = "border-box"
                 this.element.style.border = `${this.outlineSize}px solid rgba(${this.outlineColour[0]}, ${this.outlineColour[1]}, ${this.outlineColour[2]}, ${this.outlineColour[3]})`
                 this.element.style.borderRadius = this.outlineSize*2+"px"
