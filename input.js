@@ -135,7 +135,7 @@ class Input {
 		this.downTime = 0
 		this.mouse.x = event.touches[0].clientX
 		this.mouse.y = event.touches[0].clientY
-		if (!window.getSelection().toString()) event.preventDefault()
+		if (!window.getSelection().toString() && document.activeElement == document.body) event.preventDefault()
 
 		this.touches = {}
 		for (let touch of event.touches) {
@@ -152,7 +152,7 @@ class Input {
 
 			this.scroll(-deltaMove.x, -deltaMove.y)
 		}
-		event.preventDefault()
+		if (document.activeElement == document.body) event.preventDefault()
 		this.mouse.x = event.touches[0].clientX
 		this.mouse.y = event.touches[0].clientY
 		this.mobile = true
