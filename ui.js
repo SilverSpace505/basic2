@@ -544,6 +544,7 @@ class UI {
                 this.element.style.color = "rgba(0,0,0,0)"
 
                 this.cElement.style = ""
+                this.cElement.style.zIndex = ui.getOrder()
                 this.cElement.style.left = this.x-this.width/2+"px"
                 this.cElement.style.top = this.y-this.height/2+"px"
                 this.cElement.style.width = this.width+"px"
