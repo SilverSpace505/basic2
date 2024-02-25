@@ -387,7 +387,10 @@ class UI {
                 this.cElement = document.createElement("div")
                 this.cElement.style.display = "none"
                 this.cElement.addEventListener("touchend", (event) => {
-                    alert("ello")
+                    this.element.style.top = "0px"
+                    this.element.focus()
+                })
+                this.cElement.addEventListener("click", (event) => {
                     this.element.style.top = "0px"
                     this.element.focus()
                 })
