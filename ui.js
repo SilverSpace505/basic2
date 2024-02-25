@@ -380,9 +380,15 @@ class UI {
                 this.element.style.display = "none"
                 this.element.addEventListener("touchend", (event) => {
                     event.preventDefault()
-                    this.element.blur()
-                    this.element.style.top = "0px"
-                    this.element.focus()
+                    // this.element.blur()
+                    // this.element.style.top = "0px"
+                    // this.element.focus()
+                }, {passive: false})
+                this.element.addEventListener("touchstart", (event) => {
+                    event.preventDefault()
+                    // this.element.blur()
+                    // this.element.style.top = "0px"
+                    // this.element.focus()
                 }, {passive: false})
                 ui.parent.appendChild(this.element)
             }
