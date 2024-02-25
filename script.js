@@ -63,6 +63,8 @@ function update(timestamp) {
     testing2.outlineSize = 5*su
     testing2.draw()
 
+    ui.text(window.innerWidth-10*su, 40*su, 50*su, testing2.element.value.length, {align: "right"})
+
     // coolBtn.set(800, 100)
 
     ui.endFrame()
