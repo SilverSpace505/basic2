@@ -361,6 +361,7 @@ class UI {
             colour = [0, 0, 0, 1]
             outlineColour = [0, 0, 0, 1]
             element
+            cElement
             visible = false
             textColour = [255, 255, 255, 1]
             textOutlineColour = [0, 0, 0, 1]
@@ -382,6 +383,14 @@ class UI {
                 this.element = document.createElement("input")
                 this.element.style.display = "none"
                 ui.parent.appendChild(this.element)
+
+                this.cElement = document.createElement("div")
+                this.cElement.style.display = "none"
+                this.cElement.onclick = (event) => {
+                    this.element.style.top = "0px"
+                    this.element.focus()
+                }
+                ui.parent.appendChild(this.cElement)
             }
             drawText(i, off, colour, bg=false) {
                 let element = ui.getElement2("DIV")
@@ -434,10 +443,10 @@ class UI {
                 return element
             }
             draw() {
-                if (this.hovered() && input.mouse.lclick && document.activeElement != this.element) {
-                    this.element.style.top = "0px"
-                    this.element.focus()
-                }
+                // if (this.hovered() && input.mouse.lclick && document.activeElement != this.element) {
+                //     this.element.style.top = "0px"
+                //     this.element.focus()
+                // }
                 
                 let focused = document.activeElement == this.element
 
@@ -530,7 +539,13 @@ class UI {
                 // this.element.style.color = `white` 
                 this.element.style.color = "rgba(0,0,0,0)"
 
-                
+                this.cElement.style = ""
+                this.cElement.style.left = this.x-this.width/2+"px"
+                this.cElement.style.top = this.y-this.height/2+"px"
+                this.cElement.style.width = this.width+"px"
+                this.cElement.style.height = this.height+"px"
+                this.cElement.style.position = "absolute"
+                this.cElement.style.display = focused ? "none" : "block"
 
                 if (focused) {
                     function getCaretCoordinates(element, position) {
