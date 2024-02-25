@@ -436,7 +436,6 @@ class UI {
             draw() {
                 if (this.hovered() && input.mouse.lclick && document.activeElement != this.element) {
                     this.element.style.top = "0px"
-                    this.element.style.display = "flex"
                     this.element.focus()
                 }
                 
@@ -506,14 +505,14 @@ class UI {
                 this.element.style.zIndex = ui.getOrder()
                 // this.element.style.display = ""
                 this.element.style.left = this.x-this.width/2+"px"
-                this.element.style.top = this.y-this.height/2+"px"
+                this.element.style.top = focused ? this.y-this.height/2+"px" : "-1000px"
                 this.element.style.width = this.width+"px"
                 this.element.style.height = this.height+"px"
                 this.element.width = this.width
                 this.element.height = this.height
                 this.element.style.position = "absolute"
                 this.element.style.margin = 0
-                this.element.style.display = focused ? "flex" : "none"
+                this.element.style.display = "flex"
                 this.element.tabIndex = -1
                 this.element.style.alignItems = "center"
                 this.element.style.userSelect = "none"
